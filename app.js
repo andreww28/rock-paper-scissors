@@ -2,6 +2,7 @@
 
 let computer_win_count = 0;
 let player_win_count = 0;
+let draw_count = 0;
 
 // Create a function called getUserInput
 // Inside getUserInput:
@@ -10,7 +11,8 @@ let player_win_count = 0;
 
 function getUserInput(){
     let user_input = prompt("Choose: (rock,paper,scissor)");
-    return user_input;
+    return user_input.toLowerCase();
+
 }
 
 
@@ -21,7 +23,7 @@ function getUserInput(){
 
 
 function getRandomNumber(array_length){
-    let random_num = Math.floor(Math.random() + array_length);
+    let random_num = Math.floor(Math.random() * array_length);
     return random_num;
 }
 
@@ -35,8 +37,8 @@ function getRandomNumber(array_length){
 
 function computerPlay(){
     const computer_choices = ['rock','paper','scissor'];
-    let computer_choice = getRandomNumber(computer_choices.length);
-    return computer_choice;
+    let choice_num = getRandomNumber(computer_choices.length);
+    return computer_choices[choice_num];
 }
 
 
@@ -53,29 +55,44 @@ function computerPlay(){
 //         -else increment the player_win_count and return "You Win in this round! Scissor beats paper"
 
 
+
 function playRound(playerSelection, computerSelection){
+    console.log(`Player Selection: ${playerSelection}
+Computer Selection: ${computerSelection}`);
+
     if(computerSelection === "paper" && playerSelection === "rock"){
         computer_win_count++;
         return "Computer Win in this round! Paper beats Rock";
-    }else{
+    }else if (computerSelection === "rock" && playerSelection === "paper"){
         player_win_count++;
         return "You Win in this round! Paper beats Rock";
+    }else if (computerSelection === "paper" && playerSelection === "paper"){
+        draw_count++;
+        return "Round Draw! Paper and Paper";
     }
+
 
     if(computerSelection === "scissor" && playerSelection === "paper"){
         computer_win_count++;
         return "Computer Win in this round! Scissor beats Paper";
-    }else{
+    }else if(computerSelection === "paper" && playerSelection === "scissor"){
         player_win_count++;
         return "You Win in this round! Scissor beats Paper";
+    }else if (computerSelection === "scissor" && playerSelection === "scissor"){
+        draw_count++;
+        return "Round Draw! scissor and scissor";
     }
+
 
     if(computerSelection === "rock" && playerSelection === "scissor"){
         computer_win_count++;
         return "Computer Win in this round! Rock beats Scissor";
-    }else{
+    }else if (computerSelection === "scissor" && playerSelection === "rock"){
         player_win_count++;
         return "You Win in this round! Rock beats Scissor";
+    }else if (computerSelection === "rock" && playerSelection === "rock"){
+        draw_count++;
+        return "Round Draw! Rock and Rock";
     }
 }
 
@@ -103,9 +120,7 @@ function game(){
 
     while(keepPlaying){
         console.log(playRound(getUserInput(),computerPlay()));
-
         if(round === 5){
-            keepPlaying = false;
             if(player_win_count > computer_win_count){
                 console.log("Congratualations! You are the winner of the game");
 
@@ -116,10 +131,13 @@ function game(){
             }
             console.log(`Overall Score:
                 You: ${player_win_count}
-                Computer: ${computer_win_count}`);
+                Computer: ${computer_win_count}
+                Draw: ${draw_count}`);
             player_win_count = 0 ;
             computer_win_count = 0;
+            keepPlaying = false;
         }
+        round++;
     }
 }
 
