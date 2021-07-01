@@ -136,13 +136,15 @@ function game(){
             player_win_count = 0 ;
             computer_win_count = 0;
             keepPlaying = false;
+
+            alert("Open the console to see the results");
         }
         round++;
     }
 }
 
 
-alert("Open the console to see the results");
+
 game();
 
 
