@@ -54,7 +54,7 @@ function computerPlay(){
 
 
 function playRound(playerSelection, computerSelection){
-    if(computerSelection === "paper" and playerSelection === "rock"){
+    if(computerSelection === "paper" && playerSelection === "rock"){
         computer_win_count++;
         return "Computer Win in this round! Paper beats Rock";
     }else{
@@ -62,7 +62,7 @@ function playRound(playerSelection, computerSelection){
         return "You Win in this round! Paper beats Rock";
     }
 
-    if(computerSelection === "scissor" and playerSelection === "paper"){
+    if(computerSelection === "scissor" && playerSelection === "paper"){
         computer_win_count++;
         return "Computer Win in this round! Scissor beats Paper";
     }else{
@@ -70,7 +70,7 @@ function playRound(playerSelection, computerSelection){
         return "You Win in this round! Scissor beats Paper";
     }
 
-    if(computerSelection === "rock" and playerSelection === "scissor"){
+    if(computerSelection === "rock" && playerSelection === "scissor"){
         computer_win_count++;
         return "Computer Win in this round! Rock beats Scissor";
     }else{
