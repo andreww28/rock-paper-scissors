@@ -141,6 +141,8 @@ function game(){
     }
 }
 
+
+alert("Open the console to see the results");
 game();
 
 
