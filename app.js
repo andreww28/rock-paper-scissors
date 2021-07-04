@@ -1,11 +1,16 @@
 let computer_win_count = 0;
 let player_win_count = 0;
-let draw_count = 0;
+let win = false;
 
+const container = document.querySelector(".container");
 
 const paper = document.querySelector(".box-paper");
 const rock = document.querySelector(".box-rock");
 const scissor = document.querySelector(".box-scissor");
+
+const paper_img = document.querySelector(".paper");
+const rock_img = document.querySelector(".rock");
+const scissor_img = document.querySelector(".scissor");
 
 const selection_class = document.querySelector('.selection');
 const player_selection = document.querySelector(".player-selection");
@@ -13,11 +18,18 @@ const computer_selection = document.querySelector(".computer-selection");
 
 const selections = [paper,rock,scissor];
 
+const player_name = document.querySelector(".player-name");
+const player_score = document.querySelector(".your-score");
+const computer_score = document.querySelector(".computer-score");
+
+const sub_title = document.querySelector("#sub-title");
+const comment_text = document.querySelector("#comment");
+
+
 
 function selected_image_display(player, object, src){
     let currentPlayer;
     if(player === "computer"){
-        console.log("Hello");
          currentPlayer = computer_selection;
 
          if(object === "weapon1" || object === "box-rock"){
@@ -46,136 +58,193 @@ function selected_image_display(player, object, src){
     }
 }
 
+
 function getUserInput(){
     selections.forEach((selection) => {
         selection.addEventListener('click', (e) => {
-            console.log(e.target);
             selected_image_display(player = "player", object = e.target.classList[1], src = e.target.src);
+            if(e.target.classList[1] != "box"){
+                computerPlay();
+            }
+            
         });
     });
+
 }
+
 
 function getRandomNumber(array_length){
     let random_num = Math.floor(Math.random() * array_length);
     return random_num;
 }
 
-getUserInput();
 
-function computerPlay(){
-    const paper_img = document.querySelector(".paper");
-    const rock_img = document.querySelector(".rock");
-    const scissor_img = document.querySelector(".scissor");
-    
+
+function computerPlay(){ 
     let choice_num = getRandomNumber(selections.length);
     let image_src_collection = [paper_img, rock_img, scissor_img];
     let image_class = selections[choice_num].className.split(" ");
+
     selected_image_display(player = "computer", object = image_class[0], src = image_src_collection[choice_num].src);
+    playRound();
 }
 
-// Create a function called playRound with two parameter called playerSelection and computerSelection
-// Inside this function:
-//     - Compare the user input to computer_choice
-//         -if computerSelection is paper and the playerSelection is rock then increment the computer_win_count and return "Computer Win in this round! Paper beats Rock"
-//         -else increment the player_win_count and return "You Win in this round! Paper beats Rock"
 
-//         -if computerSelection is scissor and the playerSelection is paper then increment the computer_win_count and return "Computer Win in this round! Scissor beats paper"
-//         -else increment the player_win_count and return "You Win in this round! Scissor beats paper"
-
-//         -if computerSelection is rock and the playerSelection is scissor then increment the computer_win_count and return "Computer Win in this round! rock beats scissor"
-//         -else increment the player_win_count and return "You Win in this round! Scissor beats paper"
-
-
-
-function playRound(playerSelection, computerSelection){
-    console.log(`Player Selection: ${playerSelection}
-Computer Selection: ${computerSelection}`);
+function playRound(){
+    let computerSelection = computer_selection.src.split("/")[12].split("-")[0];
+    let playerSelection = player_selection.src.split("/")[12].split("-")[0];
+    let comment;
 
     if(computerSelection === "paper" && playerSelection === "rock"){
         computer_win_count++;
-        return "Computer Win in this round! Paper beats Rock";
+        comment = "Computer Win in this round! Paper beats Rock";
     }else if (computerSelection === "rock" && playerSelection === "paper"){
         player_win_count++;
-        return "You Win in this round! Paper beats Rock";
+        comment = "You Win in this round! Paper beats Rock";
     }else if (computerSelection === "paper" && playerSelection === "paper"){
-        draw_count++;
-        return "Round Draw! Paper and Paper";
+        comment = "Round Draw! Paper and Paper";
     }
 
 
     if(computerSelection === "scissor" && playerSelection === "paper"){
         computer_win_count++;
-        return "Computer Win in this round! Scissor beats Paper";
+        comment = "Computer Win in this round! Scissor beats Paper";
     }else if(computerSelection === "paper" && playerSelection === "scissor"){
         player_win_count++;
-        return "You Win in this round! Scissor beats Paper";
+        comment = "You Win in this round! Scissor beats Paper";
     }else if (computerSelection === "scissor" && playerSelection === "scissor"){
-        draw_count++;
-        return "Round Draw! scissor and scissor";
+        comment = "Round Draw! scissor and scissor";
     }
 
 
     if(computerSelection === "rock" && playerSelection === "scissor"){
         computer_win_count++;
-        return "Computer Win in this round! Rock beats Scissor";
+        comment = "Computer Win in this round! Rock beats Scissor";
     }else if (computerSelection === "scissor" && playerSelection === "rock"){
         player_win_count++;
-        return "You Win in this round! Rock beats Scissor";
+        comment = "You Win in this round! Rock beats Scissor";
     }else if (computerSelection === "rock" && playerSelection === "rock"){
-        draw_count++;
-        return "Round Draw! Rock and Rock";
+        comment = "Round Draw! Rock and Rock";
     }
+
+    player_score.textContent = player_win_count;
+    computer_score.textContent = computer_win_count;
+    comment_text.textContent = comment;
+
+    declare_winner();
 }
 
 
-// Create a function called game
-// Inside this function:
-//     -create a variable called round and set the value to 1
-//     -create a variable called keepPlaying with the value of  true
-//     -create a while loop then pass in the keepPlaying variable
-//     Inside the loop:
-//         -display the winner by calling the function playRound and passing the function getUserInput and computerplay as argument
-//         -create and if statement that check if the round is already 5:
-//             -if round is already 5 then set the value of keepPlaying to false then display the overall winner by using another if statement
-//                 -if player_win_count > computer_win_count then display "Congratualations! You are the winner of the game"
-//                 -if player_win_count < computer_win_count then display "Better luck next time! Refresh the page to play again."
-//                 -else if player_win_count === computer_win_count then display "It's a draw"
-//                 -display the player_win_count and computer_win_count
-//                 -reset player_win_count and computer_win_count by assigning 0
+function declare_winner(){
+    if (player_win_count === 5){
+        comment_text.textContent = "Congratualations! You Win!"
+    }else if (computer_win_count === 5){
+        comment_text.textContent = "You lose! Please Try again.";
+    }
+
+    if(player_win_count === 5 || computer_win_count === 5){
+        win = true;
+        player_win_count = 0;
+        computer_win_count = 0;
+        sub_title.textContent = "";
+    }
+    create_button("Play Again");
+
+}
 
 
+function manipulate_content(action, all_content="false"){
+    weapon_div = document.querySelector(".weapon-div");
+    versus_div = document.querySelector(".versus-div");
 
-function game(){
-    let round = 1;
-    let keepPlaying = true;
+    if (action === "remove"){
+        weapon_div.style.display = "none";
 
-    while(keepPlaying){
-        console.log(playRound(getUserInput(),computerPlay()));
-        if(round === 5){
-            if(player_win_count > computer_win_count){
-                console.log("Congratualations! You are the winner of the game");
-
-            }else if(player_win_count < computer_win_count){
-                console.log("Better luck next time! Refresh the page to play again.");
-            }else{
-                console.log("It's a draw!");
-            }
-            console.log(`Overall Score:
-                You: ${player_win_count}
-                Computer: ${computer_win_count}
-                Draw: ${draw_count}`);
-            player_win_count = 0 ;
-            computer_win_count = 0;
-            keepPlaying = false;
-
-            alert("Open the console to see the results");
+        if(!all_content){
+            return;
         }
-        round++;
+        versus_div.style.display = "none";
+
+    }else if(action == "add"){
+        weapon_div.style.display = "block";
+
+        if(!all_content){
+            return;
+        }
+
+        versus_div.setAttribute("style", `display: block;
+                                          margin:1.5em auto;
+                                          width:100%;
+                                          max-width:30em;
+                                          display:grid;
+                                          grid-template-columns: 1fr 1fr 1fr;
+                                          align-items:center;
+                                          justify-items:center;`);
+
     }
 }
 
 
+function create_button(content){
+    let btn_div = document.createElement("div");
+    let button = document.createElement("button");
+
+    btn_div.classList.add("btn-div");
+    button.classList.add("btn");
+    button.textContent = content;
+
+    if(content == "Submit"){
+        const input_field = document.createElement("input");
+        input_field.setAttribute("type","text");
+        input_field.setAttribute("value","");
+        input_field.setAttribute("placeholder","Name");
+        input_field.setAttribute("autocomplete","false");
+
+        btn_div.appendChild(input_field); 
+        manipulate_content("remove", all_content = true);
+
+        input_field.setAttribute("style", "width: 100%; max-width: 10em; font-size: inherit; border:none; outline:none; background:transparent; border-bottom: 2px solid #3B4924; color:#ececec;")
+        btn_div.setAttribute("style", "height: 60%; font-size: 1.5rem;");
+
+        button.onclick = function(){
+            player_name.textContent = input_field.value;
+            manipulate_content("add", all_content = true);
+            btn_div.remove();
+        }
+
+    }else if(content == "Play Again"){
+            manipulate_content("remove", all_content = false);
+            button.onclick = function(){
+            manipulate_content("add", all_content = false);
+            
+            player_selection.src = "img\\rock-img.png";
+            computer_selection.src = "img\\rock-flip.png";
+            player_selection.style.maxWidth = "6em";
+            computer_selection.style.maxWidth = "6em";
+
+            comment_text.textContent = "";
+            btn_div.remove();
+
+            if(win === true){
+                sub_title.textContent = "First to 5 Wins!"
+                player_score.textContent = "0";
+                computer_score.textContent = "0";
+                win = false;
+            }
+        }
+    }
+
+    btn_div.appendChild(button);
+    container.appendChild(btn_div);
+
+}
 
 
+function start_game(){
+    create_button("Submit");
+    getUserInput();
+}
+
+start_game();
 
     

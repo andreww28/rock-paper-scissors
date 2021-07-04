@@ -13,10 +13,7 @@ body{
     font-family: 'Gloria Hallelujah', cursive;
     font-size: clamp(1.4rem, 5vw, 2.25rem);
     color:#C9A5A5;
-    background: url(https://i.postimg.cc/Dy78mP65/board.png);
-    background-color:#0A120A;
-    background-size:cover;
-    background-repeat:no-repeat;
+    background-color:rgb(12, 39, 12);
 }
 
 .container{
@@ -40,22 +37,13 @@ h1{
     font-size:clamp(2.5rem, 8vw, 4rem);
 }
 
-.versus-div{
-    margin:1.5em auto;
-    width:100%;
-    max-width:30em;
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items:center;
-    justify-items:center;
-}
 
 .selection{
     max-width:6em;
     height:auto;
 }
 
-.score{
+.score, #you{
     text-align:center;
 }
 
@@ -106,7 +94,7 @@ h1{
     border-radius: 10px;
 }
 
-.box:hover{
+.box:hover, .btn:hover{
     transform: translateY(-1rem);
     box-shadow: 1px 5px 10px #baba8e;
 }
@@ -138,6 +126,28 @@ h1{
         gap:1em;
     }
 }
+
+/*From Javascript*/
+.btn-div{
+    width: 100%;
+    display:flex;
+    gap:2em;
+    justify-content:center;
+    align-items:center;
+    padding-bottom:1em;
+}
+
+.btn{
+    font-size: 1.3rem;
+    font-family: inherit;
+    padding: 0.3em 1em;
+    color:inherit;
+    background-color:#3B4924;
+    border-radius: 20px;
+    border:none;
+    cursor: pointer;
+}
+
 
 
 
