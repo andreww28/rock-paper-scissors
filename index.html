@@ -4,10 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Gloria+Hallelujah&display=swap" rel="stylesheet"> 
+    <link href="style.css" rel="stylesheet">
     <title>Rock Paper Scissor</title>
 </head>
+
 <body>
+    <div class="container">
+        <h1 class="yellow-color">ROCK PAPER SCISSORS</h1>
+        <h3>First to 5 Wins</h3>
+
+        <div class="versus-div">
+            <div id="you">
+                <p class="yellow-color">You</p>
+                <p class="your-score score">0</p>
+            </div>
+            <div id="computer">
+                <p class="yellow-color">Computer</p>
+                <p class="computer-score score">0</p>
+            </div>
+            <img src="img\rock-img.png" alt="" class="player-selection selection">
+            <img src="img\rock-flip.png" alt="" class="computer-selection selection">
+            <p id="vs">VS.</p>
+            <p id="comment">Computer Win! Scissor beats Paper</p>
+        </div>
+
+        <div class="weapon-div">
+            <h2 class="yellow-color">Choose Your Weapon</h2>
+            <div class="weapons">
+                <div class="box-rock box">
+                    <img src="img\rock-img.png" alt="" class="weapon weapon1 rock">
+                </div>
+                <div class="box-paper box">
+                    <img src="img\paper.png" alt="" class="weapon weapon2 paper">
+                </div>
+                <div class="box-scissor box">
+                    <img src="img\scissor(1).png" alt="" class="weapon weapon3 scissor">
+                </div>
+            </div>
+        </div>
+    </div>
     
+    <script src="app.js"></script>
 </body>
 </html>

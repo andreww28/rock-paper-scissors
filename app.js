@@ -1,46 +1,77 @@
-//declare a global variable called computer_win_count and player_win_count and set both value to 0
-
 let computer_win_count = 0;
 let player_win_count = 0;
 let draw_count = 0;
 
-// Create a function called getUserInput
-// Inside getUserInput:
-//     -get user input by using prompt and assign it to a variable named user_input
-//     -then return the user_input in a lowercase form
 
-function getUserInput(){
-    let user_input = prompt("Choose: (rock,paper,scissor)");
-    return user_input.toLowerCase();
+const paper = document.querySelector(".box-paper");
+const rock = document.querySelector(".box-rock");
+const scissor = document.querySelector(".box-scissor");
 
+const selection_class = document.querySelector('.selection');
+const player_selection = document.querySelector(".player-selection");
+const computer_selection = document.querySelector(".computer-selection");
+
+const selections = [paper,rock,scissor];
+
+
+function selected_image_display(player, object, src){
+    let currentPlayer;
+    if(player === "computer"){
+        console.log("Hello");
+         currentPlayer = computer_selection;
+
+         if(object === "weapon1" || object === "box-rock"){
+            src = "img\\rock-flip.png";
+         }
+
+    }else if(player === "player"){
+        currentPlayer = player_selection;
+
+        if(object === "weapon3" || object === "box-scissor"){
+            src = "img\\scissor-flip.png";
+        }
+
+    }
+
+    if(object === "weapon1" || object === "box-rock"){
+        currentPlayer.style.maxWidth = "6em";
+    }else if(object === "weapon2" || object === "box-paper"){
+        currentPlayer.style.maxWidth = "4em";
+    }else if(object === "weapon3" || object === "box-scissor"){
+        currentPlayer.style.maxWidth = "4.5em";
+    }
+
+    if(src != undefined){
+        currentPlayer.src = src;
+    }
 }
 
-
-// Create a function called getRandomNumber with parameter named array_length
-// Inside getRandomNumber:
-//     -assign a random number to variable called random_num
-//     -return the random_num
-
+function getUserInput(){
+    selections.forEach((selection) => {
+        selection.addEventListener('click', (e) => {
+            console.log(e.target);
+            selected_image_display(player = "player", object = e.target.classList[1], src = e.target.src);
+        });
+    });
+}
 
 function getRandomNumber(array_length){
     let random_num = Math.floor(Math.random() * array_length);
     return random_num;
 }
 
-
-// Create a function called computerPlay
-// Inside this function:
-//     -create an array called computer_choices, containing three elements such as rock, paper and scissor.
-//     -assign a function called getRandomNumber to a variable called computer_choice with the length of the computer_choices as an argument of the function.
-//     -return the computer_choice
-
+getUserInput();
 
 function computerPlay(){
-    const computer_choices = ['rock','paper','scissor'];
-    let choice_num = getRandomNumber(computer_choices.length);
-    return computer_choices[choice_num];
+    const paper_img = document.querySelector(".paper");
+    const rock_img = document.querySelector(".rock");
+    const scissor_img = document.querySelector(".scissor");
+    
+    let choice_num = getRandomNumber(selections.length);
+    let image_src_collection = [paper_img, rock_img, scissor_img];
+    let image_class = selections[choice_num].className.split(" ");
+    selected_image_display(player = "computer", object = image_class[0], src = image_src_collection[choice_num].src);
 }
-
 
 // Create a function called playRound with two parameter called playerSelection and computerSelection
 // Inside this function:
@@ -143,9 +174,6 @@ function game(){
     }
 }
 
-
-
-game();
 
 
 
