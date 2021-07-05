@@ -91,8 +91,12 @@ function computerPlay(){
 
 
 function playRound(){
-    let computerSelection = computer_selection.src.split("/")[12].split("-")[0];
-    let playerSelection = player_selection.src.split("/")[12].split("-")[0];
+    let computer_img_path = computer_selection.src.split("/");
+    let computerSelection = computer_img_path[computer_img_path.length -1].split("-")[0];
+
+    let player_img_path = player_selection.src.split("/");
+    let playerSelection = player_img_path[player_img_path.length -1].split("-")[0];
+    
     let comment;
 
     if(computerSelection === "paper" && playerSelection === "rock"){
@@ -127,6 +131,7 @@ function playRound(){
         comment = "Round Draw! Rock and Rock";
     }
 
+    console.log(player_win_count);
     player_score.textContent = player_win_count;
     computer_score.textContent = computer_win_count;
     comment_text.textContent = comment;
